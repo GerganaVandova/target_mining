@@ -15,15 +15,27 @@ for line in ks_count_file:
     # print full_id, ks, kr, dh, er
     # print id_to_features[full_id]
 
-# LpxC,NZ_LGRC01000036,1,22846-70432,t1pks,ACU09_RS39030_UDP-3-O-[3-hydroxymyristoyl],50429,51352,95,305,307,0.31,8.00E-48424332,5.00E-39,2.00E-1680E-169
+
+# 100088	sp|Q47146|FADE_ECOLI	NZ_KK073768	7	3530291-3630379	nrps-t1pks-fabH	ctg1_orf06070_-	3579692	3580876	78.0	814.0	394	0.10	2e-03573855	3575132	4560
 input_filename = sys.argv[2]
 input_file = open(input_filename).readlines()
+
+output_file = sys.argv[3]
+outf = open(output_file, "w")
+
 for line in input_file:
     line = line.strip()
     features = line.split("\t")
-    target, cluster_name, cluster_num = features[:3]
+    cluster_size, target, cluster_name, cluster_num = features[:4]
     full_id = cluster_name + "." + cluster_num
     if full_id in id_to_features.keys():
         # print full_id, id_to_features[full_id], features
-        print full_id, "\t", '\t'.join(id_to_features[full_id]), '\t'.join(features)
-    # print target, cluster_name, cluster_num, full_id
+        domain_counts = str('\t'.join(id_to_features[full_id]))
+        feats = str('\t'.join(features))
+        outf.write("%s\t%s" % (feats, domain_counts))
+        outf.write("\n")
+        print full_id, "\t", domain_counts, feats
+
+        # print full_id, "\t", '\t'.join(id_to_features[full_id]), '\t'.join(features)
+        # print target, cluster_name, cluster_num, full_id
+outf.close()
