@@ -11,8 +11,8 @@ ks_count_file = open(ks_count_filename).readlines()
 for line in ks_count_file:
     line = line.strip()
     features = line.split("\t")
-    # print features
-    full_id, ks, kr, dh, er = features
+    print features
+    full_id, ks, kr, dh, er, c = features
     id_to_features[full_id] = (c)
     # print full_id, ks, kr, dh, er
     # print id_to_features[full_id]
